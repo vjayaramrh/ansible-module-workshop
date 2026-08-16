@@ -81,6 +81,31 @@ The decks are [Marp](https://marp.app/) markdown. Three ways to view them:
 
 ---
 
+## Contributing / adding a module
+
+Conventions live in [CLAUDE.md](CLAUDE.md) — read it before adding or changing a
+module. In short: every module needs the GPL header + matching doc blocks + a valid
+`author`, must be idempotent and check-mode aware, and must pass `ansible-test sanity`.
+
+**Fastest way to add a new module:** if you use Claude Code, run the bundled skill
+
+```
+/new-ansible-module
+```
+
+It scaffolds a convention-correct module (header, `DOCUMENTATION`/`EXAMPLES`/`RETURN`,
+an idempotent + check-mode skeleton), a unit test (create / idempotency / check-mode
+cases), and the `conftest.py`/helpers — then verifies with sanity + pytest.
+
+**Before you push,** keep the reference solutions green:
+
+```bash
+./run.sh --check     # fast: module runs + pytest
+./run.sh --full      # deep: also ansible-test sanity + collection build/install + live round-trip
+```
+
+CI runs `--full` on every push and PR — don't merge red.
+
 ## License
 
 Distribute freely for your own workshops. Attribution appreciated but not required.
