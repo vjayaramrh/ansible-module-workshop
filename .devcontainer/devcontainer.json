@@ -1,0 +1,22 @@
+{
+  "name": "Ansible Module Workshop",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "."
+  },
+  "workspaceFolder": "/workshop",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workshop,type=bind,consistency=cached",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "redhat.ansible",
+        "ms-python.python",
+        "marp-team.marp-vscode"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python"
+      }
+    }
+  },
+  "remoteUser": "workshop"
+}

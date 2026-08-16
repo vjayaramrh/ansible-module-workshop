@@ -1,0 +1,11 @@
+namespace: workshop
+name: demo
+version: 1.0.0
+readme: README.md
+authors:
+  - Workshop <workshop@example.com>
+description: Workshop demo collection (reference solution)
+license:
+  - GPL-3.0-or-later
+tags:
+  - workshop

@@ -1,0 +1,7 @@
+{
+  "ANSIBLE_MODULE_ARGS": {
+    "path": "/tmp/app.conf",
+    "key": "debug",
+    "value": "true"
+  }
+}

@@ -1,0 +1,29 @@
+# Built Ansible collection artifacts
+*.tar.gz
+
+# ansible-test output (sanity/units/integration runs)
+tests/output/
+**/tests/output/
+
+# ansible runtime/cache
+.ansible/
+**/.ansible/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Editor / OS cruft
+.DS_Store
+*.swp
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Rendered slide exports (source of truth is the .md files)
+*.pdf
+*.html
+*.pptx

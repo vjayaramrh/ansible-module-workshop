@@ -1,0 +1,28 @@
+---
+# Integration test target for config_setting.
+# Run with:  ansible-test integration config_setting
+# (from the collection directory)
+
+- name: First run creates the setting
+  workshop.demo.config_setting:
+    path: /tmp/ws_integration.conf
+    key: debug
+    value: "true"
+  register: first
+
+- name: Second run is a no-op (idempotency)
+  workshop.demo.config_setting:
+    path: /tmp/ws_integration.conf
+    key: debug
+    value: "true"
+  register: second
+
+- name: Assert behavior
+  ansible.builtin.assert:
+    that:
+      - first is changed
+      - second is not changed
+    fail_msg: "config_setting is not idempotent!"
+
+# TODO (stretch): add a third task that changes the value to "false"
+#   and assert that task reports `changed`.

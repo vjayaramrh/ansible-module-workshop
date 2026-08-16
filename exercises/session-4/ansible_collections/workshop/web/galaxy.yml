@@ -1,0 +1,12 @@
+namespace: workshop
+name: web
+version: 1.0.0
+readme: README.md
+authors:
+  - Workshop Attendee <you@example.com>
+description: Capstone collection - manage REST resources idempotently
+license:
+  - GPL-3.0-or-later
+tags:
+  - workshop
+  - web
