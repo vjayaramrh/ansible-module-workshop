@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Native verification: fastest signal on the actual module/test code.
+  # Runs the same suite as `./run.sh --full` (module runs + pytest + sanity +
+  # collection build/install + live mock-API round-trip), but directly on the
+  # runner instead of nested in a container.
+  verify:
+    name: Verify (native, --full)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the workshop toolchain
+        run: |
+          python -m pip install --upgrade pip
+          pip install "ansible-core>=2.16,<2.18" "pytest>=8.0" "pytest-mock>=3.12" "pyyaml>=6.0"
+
+      - name: Show versions
+        run: |
+          ansible --version
+          python -m pytest --version
+
+      - name: Run full self-verification
+        run: bash scripts/smoke.sh --full
+
+  # Container verification: proves the devcontainer image builds and the
+  # attendee run-path works. Uses the fast smoke (the native job covers --full).
+  devcontainer:
+    name: Devcontainer image builds + smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build the devcontainer image
+        run: docker build -t ansible-module-workshop .devcontainer
+
+      - name: Run smoke test inside the image
+        run: |
+          docker run --rm \
+            -v "$PWD":/workshop -w /workshop -e HOME=/tmp \
+            ansible-module-workshop bash scripts/smoke.sh

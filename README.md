@@ -1,5 +1,7 @@
 # Writing Ansible Modules — A Beginner Workshop
 
+[![CI](https://github.com/vjayaramrh/ansible-module-workshop/actions/workflows/ci.yml/badge.svg)](https://github.com/vjayaramrh/ansible-module-workshop/actions/workflows/ci.yml)
+
 A hands-on, four-session workshop that takes you from *Ansible user* to *Ansible
 module author*. Everything runs in a container — **Docker or Podman, nothing else
 on your laptop** — so there is no "works on my machine." Examples are
