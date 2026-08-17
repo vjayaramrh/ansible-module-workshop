@@ -3,6 +3,8 @@
 FROM python:3.12-slim
 
 # ansible-test's integration runner and general dev ergonomics need these.
+# openssh-client provides ssh-keygen, which `ansible-test integration` requires
+# even for localhost targets.
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         git \
@@ -11,6 +13,7 @@ RUN apt-get update \
         less \
         ca-certificates \
         rsync \
+        openssh-client \
     && rm -rf /var/lib/apt/lists/*
 
 # Pin the toolchain. ansible-core (not the big "ansible" package) is what module
@@ -20,6 +23,11 @@ RUN pip install --no-cache-dir \
         "pytest>=8.0" \
         "pytest-mock>=3.12" \
         "pyyaml>=6.0"
+
+# The repo is bind-mounted and, under rootless podman (--userns=keep-id), git sees
+# it as owned by a different UID and refuses to operate ("dubious ownership").
+# ansible-test integration shells out to git, so trust the mount system-wide.
+RUN git config --system --add safe.directory /workshop
 
 # A non-root user is nicer for VS Code and avoids root-owned files on bind mounts.
 ARG USERNAME=workshop
