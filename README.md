@@ -31,6 +31,10 @@ vendor-neutral: no cloud account, and (after the one-time image build) no intern
 Each session is ~90 minutes: ~40 min presentation, ~40 min hands-on, ~10 min
 wrap-up. See [facilitator-guide.md](facilitator-guide.md) for timing and talking points.
 
+New to the terminology? [**GLOSSARY.md**](GLOSSARY.md) defines every concept the
+workshop introduces (idempotency, check mode, `monkeypatch`, FQCN, …) with a
+one-line definition, the session it appears in, and a file pointer.
+
 ---
 
 ## Repository layout

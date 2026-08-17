@@ -22,6 +22,17 @@ theme: default
 
 ---
 
+## New concepts this session
+
+testing pyramid · `ansible-test` (sanity/units/integration) · `validate-modules` ·
+pytest · fixtures (`tmp_path`, `autouse`) · `monkeypatch` · mocking ·
+`pytest.raises` + `AnsibleExitJson` · `set_module_args` · `conftest.py` ·
+integration targets
+
+*New to any of these? See [`GLOSSARY.md`](../GLOSSARY.md).*
+
+---
+
 ## The testing pyramid for modules
 
 ```

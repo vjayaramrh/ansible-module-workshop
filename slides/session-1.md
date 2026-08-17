@@ -32,6 +32,17 @@ By the end you'll have written, tested, and *shipped* a real module.
 
 ---
 
+## New concepts this session
+
+module · runs on the target · `AnsibleModule` · `argument_spec` ·
+`module.params` · `exit_json` / `fail_json` · `changed` ·
+the `ANSIBLE_MODULE_ARGS` envelope · module vs role vs plugin
+
+*New to any of these? See [`GLOSSARY.md`](../GLOSSARY.md) — one-line definitions
+with pointers to where each is used.*
+
+---
+
 ## What *is* a module?
 
 > A module is just a small program that:

@@ -22,6 +22,16 @@ theme: default
 
 ---
 
+## New concepts this session
+
+idempotency · check mode (`supports_check_mode`, `module.check_mode`) ·
+diff mode · `DOCUMENTATION`/`EXAMPLES`/`RETURN` · module boilerplate
+(GPL header, `__future__`) · `author` format · `no_log=False` · `fetch_url`
+
+*New to any of these? See [`GLOSSARY.md`](../GLOSSARY.md).*
+
+---
+
 ## Idempotency: the one idea that matters
 
 > Running the module twice should change the system **at most once**.

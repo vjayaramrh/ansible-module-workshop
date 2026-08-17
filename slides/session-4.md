@@ -21,6 +21,16 @@ theme: default
 
 ---
 
+## New concepts this session
+
+collection · FQCN (`namespace.collection.module`) · collection structure ·
+`galaxy.yml` · `ansible-galaxy collection build` / `install` ·
+`ANSIBLE_COLLECTIONS_PATH`
+
+*New to any of these? See [`GLOSSARY.md`](../GLOSSARY.md).*
+
+---
+
 ## Why collections?
 
 Before collections, modules were loose files in a global namespace — name clashes,
