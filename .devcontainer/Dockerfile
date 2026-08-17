@@ -22,6 +22,7 @@ RUN pip install --no-cache-dir \
         "ansible-core>=2.16,<2.18" \
         "pytest>=8.0" \
         "pytest-mock>=3.12" \
+        "pytest-xdist>=3.5" \
         "pyyaml>=6.0"
 
 # The repo is bind-mounted and, under rootless podman (--userns=keep-id), git sees

@@ -2,9 +2,9 @@
 # Self-verification, run INSIDE the container (via `./run.sh --check` / `--full`).
 # Exercises the reference solutions end to end.
 #   (no args)  smoke: module runs (S1, S2) + pytest (S3, S4)   — fast, offline
-#   --full     also: ansible-test sanity (S3, S4) + galaxy build/install +
-#                    live mock-API round-trip + ansible-test integration (S3)
-#                    — slower, needs internet once
+#   --full     also: ansible-test sanity + ansible-test units (S3, S4) +
+#                    galaxy build/install + live mock-API round-trip +
+#                    ansible-test integration (S3) — slower, needs internet once
 # Exits non-zero if anything fails, so it's CI-friendly too.
 set -uo pipefail
 
@@ -87,6 +87,25 @@ if [ "$FULL" -eq 1 ]; then
         ok "webhook_resource passes validate-modules"
     else
         no "webhook_resource sanity failed"; tail -n 15 /tmp/s4_sanity.log | sed 's/^/     /'
+    fi
+
+    # --- ansible-test units (the official runner; needs pytest-xdist) --------
+    head "Session 3 — ansible-test units (config_setting)"
+    if ( cd solutions/session-3/ansible_collections/workshop/demo \
+            && ansible-test units --python 3.12 \
+                 tests/unit/plugins/modules/test_config_setting.py >/tmp/s3_units.log 2>&1 ); then
+        ok "config_setting ansible-test units pass"
+    else
+        no "config_setting ansible-test units failed"; tail -n 20 /tmp/s3_units.log | sed 's/^/     /'
+    fi
+
+    head "Session 4 — ansible-test units (webhook_resource)"
+    if ( cd solutions/session-4/ansible_collections/workshop/web \
+            && ansible-test units --python 3.12 \
+                 tests/unit/plugins/modules/test_webhook_resource.py >/tmp/s4_units.log 2>&1 ); then
+        ok "webhook_resource ansible-test units pass"
+    else
+        no "webhook_resource ansible-test units failed"; tail -n 20 /tmp/s4_units.log | sed 's/^/     /'
     fi
 
     # --- Collection build + install -----------------------------------------
