@@ -85,6 +85,24 @@ The decks are [Marp](https://marp.app/) markdown. Three ways to view them:
 
 ---
 
+## Bundled Claude Code skill: `/new-ansible-module`
+
+This repo ships a reusable [Claude Code](https://claude.com/claude-code) skill at
+[`.claude/skills/new-ansible-module/`](.claude/skills/new-ansible-module/SKILL.md).
+Run it to scaffold a **custom Ansible module in Python** that passes
+`ansible-test sanity` on the first try — it generates the module (GPL header,
+`DOCUMENTATION`/`EXAMPLES`/`RETURN`, `argument_spec`, an idempotent + check-mode
+skeleton), a pytest unit test (create / idempotency / check-mode cases), and the
+`conftest.py`/helpers.
+
+```
+/new-ansible-module
+```
+
+It's **self-contained and portable** — the templates are inline, so you can copy the
+skill into any repo (not just this workshop) and it still works. It picks the right
+idempotency pattern (state-based `present/absent` vs. value-based) from your answers.
+
 ## Contributing / adding a module
 
 Conventions live in [CLAUDE.md](CLAUDE.md) — read it before adding or changing a
