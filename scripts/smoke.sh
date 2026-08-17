@@ -3,7 +3,8 @@
 # Exercises the reference solutions end to end.
 #   (no args)  smoke: module runs (S1, S2) + pytest (S3, S4)   — fast, offline
 #   --full     also: ansible-test sanity (S3, S4) + galaxy build/install +
-#                    live mock-API round-trip  — slower, needs internet once
+#                    live mock-API round-trip + ansible-test integration (S3)
+#                    — slower, needs internet once
 # Exits non-zero if anything fails, so it's CI-friendly too.
 set -uo pipefail
 
@@ -126,6 +127,15 @@ if [ "$FULL" -eq 1 ]; then
         printf '     absent:     %s\n' "$(grep -o '"changed": [a-z]*' <<<"$a3" | head -1)"
     fi
     rm -rf /tmp/ws-check
+
+    # --- Integration target (real play; needs ssh-keygen + git in the image) --
+    head "Session 3 — ansible-test integration (config_setting)"
+    if ( cd solutions/session-3/ansible_collections/workshop/demo \
+            && ansible-test integration config_setting >/tmp/s3_integration.log 2>&1 ); then
+        ok "config_setting integration target passes"
+    else
+        no "config_setting integration failed"; tail -n 25 /tmp/s3_integration.log | sed 's/^/     /'
+    fi
 fi
 
 # ============================================================================

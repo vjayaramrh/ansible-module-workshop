@@ -110,10 +110,11 @@ All checks passed — you are ready for Session 1. 🎉
 Exit code is `0` on success, so this also works in CI.
 
 **Deep pre-workshop check — `./run.sh --full`:** everything `--check` does, *plus*
-`ansible-test sanity` on both modules and the full Session 4 collection
-build → install → live mock-API round-trip. Slower and needs internet once (it
-bootstraps the sanity test's own venv), so it's meant for the facilitator before
-the workshop rather than every attendee. Ends with `passed: 9   failed: 0`.
+`ansible-test sanity` on both modules, the full Session 4 collection
+build → install → live mock-API round-trip, and the Session 3 `ansible-test
+integration` target. Slower and needs internet once (it bootstraps the sanity
+test's own venv), so it's meant for the facilitator before the workshop rather
+than every attendee. Ends with `passed: 10   failed: 0`.
 
 **Manual version** — inside the container, from the repo root:
 
