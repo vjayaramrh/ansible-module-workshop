@@ -80,6 +80,20 @@ Catches, among other things:
 
 ---
 
+## Gotcha: sanity lints your *test* files too
+
+`ansible-test sanity` runs `pylint` over **everything** — including the tests
+you just wrote. A green module with a sloppy test file still fails sanity.
+
+Common surprises in `tests/`:
+- an **unused import** (e.g. `import pytest` you never reference)
+- using **`_`** as a throwaway loop variable — pylint's `disallowed-name`
+  (`for _ in range(2):` fails; name it `for attempt in range(2):`)
+
+*Lesson: hold your test code to the same bar as your module code.*
+
+---
+
 ## Unit tests: the idea
 
 Call the module's `main()` with fake args, capture how it exits.

@@ -44,6 +44,7 @@ can see it used. 🚩 marks the concepts beginners most often stall on.
 | Testing pyramid | Many fast unit tests, fewer integration tests, plus cheap automatic sanity checks. | `slides/session-3.md` |
 | `ansible-test` | Ansible's test runner; three modes: `sanity`, `units`, `integration`. Runs from inside a collection. 🚩 | `exercises/session-3/README.md` |
 | `validate-modules` | A sanity test that checks docs match the spec, license header, author, etc. | `exercises/session-3/README.md` |
+| Sanity lints tests too 🚩 | `ansible-test sanity` runs pylint over your `tests/` too: unused imports and `_` as a loop var (`disallowed-name`) will fail. | `slides/session-3.md` |
 | pytest | The Python test framework used for unit tests. | `.../tests/unit/plugins/modules/test_config_setting.py` |
 | Fixture 🚩 | A value/setup pytest injects into a test by name (e.g. `tmp_path`, `monkeypatch`); `autouse=True` applies it automatically. | `.../test_config_setting.py` |
 | `tmp_path` | Built-in fixture giving each test a fresh temporary directory. | `.../test_config_setting.py` |
