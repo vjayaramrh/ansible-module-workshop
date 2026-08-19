@@ -24,7 +24,8 @@ theme: default
 
 ## New concepts this session
 
-idempotency · check mode (`supports_check_mode`, `module.check_mode`) ·
+idempotency · classify the module (read-only `_info` / state-based / action) ·
+check mode (`supports_check_mode`, `module.check_mode`) ·
 diff mode · `DOCUMENTATION`/`EXAMPLES`/`RETURN` · module boilerplate
 (GPL header, `__future__`) · `author` format · `no_log=False` · `fetch_url`
 
@@ -56,6 +57,24 @@ module.exit_json(changed=True)
 ```
 
 **Observe → compare → act only if needed.** Memorize this shape.
+
+---
+
+## First, classify: three kinds of module
+
+Not every module is "make state X true." Before writing one, decide **which
+kind** it is — each has its own idempotency rule:
+
+- **Read-only / `_info`** — only *reports* (list versions, get status). Never
+  changes anything → always `changed=false`, and `supports_check_mode=True`
+  is free. Named `<thing>_info`.
+- **State-based (declarative)** — `state: present/absent`. Uses the
+  observe → compare → act recipe above. *(This session's `config_setting`.)*
+- **Action / RPC** — a *verb*, not a state (`restart`, `install`, `cancel`).
+  Can't "compare to desired" — instead guard on current status and no-op if
+  already there.
+
+*Get the classification right and the correct `changed` behavior follows.*
 
 ---
 
