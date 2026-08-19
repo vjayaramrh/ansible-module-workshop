@@ -28,6 +28,8 @@ can see it used. 🚩 marks the concepts beginners most often stall on.
 | Concept | One-line definition | See |
 |---|---|---|
 | Idempotency 🚩 | Running twice changes the system at most once; the pattern is **observe → compare → act**. | `solutions/session-2/config_setting.py` |
+| Classify the module first 🚩 | Pick the kind before coding — each has its own `changed` rule: read-only `_info`, state-based (`present/absent`), or action/RPC (guard on status). | `slides/session-2.md` |
+| `_info` module | A read-only module that only *reports*; returns via the normal result dict and is always `changed=false`. Named `<thing>_info`. | `slides/session-2.md` |
 | Check mode 🚩 | Dry-run: predict what would change without doing it. Opt in with `supports_check_mode=True`, honor via `module.check_mode`. | `solutions/session-2/config_setting.py` |
 | Diff mode | Return a `{"before":..., "after":...}` dict so `--diff` shows the change. | `solutions/session-2/config_setting.py` |
 | `DOCUMENTATION` / `EXAMPLES` / `RETURN` | The three module doc blocks; `options:` must match `argument_spec`. 🚩 | `solutions/session-2/config_setting.py` |

@@ -173,6 +173,12 @@ The solution is a full, working collection you can keep as a template.
 - Explore **plugins** (lookup, filter, connection) — modules are just the start
 - Read the **Ansible dev_guide** end to end now that it'll make sense
 - Add **CI** (GitHub Actions) running `ansible-test` on every PR
+- **Share code across modules** — when you write your 2nd/3rd API module, factor
+  auth, URL-building, and the HTTP call into `plugins/module_utils/` instead of
+  copy-pasting
+- **Real auth** — a `no_log` token param that also reads an env var via
+  `env_fallback`, and *fail fast* with a clear `msg` instead of sending
+  `Authorization: Bearer None`
 
 ---
 
