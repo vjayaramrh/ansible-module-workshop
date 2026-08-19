@@ -28,8 +28,11 @@ can see it used. 🚩 marks the concepts beginners most often stall on.
 | Concept | One-line definition | See |
 |---|---|---|
 | Idempotency 🚩 | Running twice changes the system at most once; the pattern is **observe → compare → act**. | `solutions/session-2/config_setting.py` |
-| Classify the module first 🚩 | Pick the kind before coding — each has its own `changed` rule: read-only `_info`, state-based (`present/absent`), or action/RPC (guard on status). | `slides/session-2.md` |
+| Classify the module first 🚩 | Pick the kind before coding — each has its own `changed` rule: read-only `_info`, state-based (`present/absent`), or action/RPC (guard on status). Real specs add two more: download/retrieval and out-of-scope. | `slides/session-2.md` |
 | `_info` module | A read-only module that only *reports*; returns via the normal result dict and is always `changed=false`. Named `<thing>_info`. | `slides/session-2.md` |
+| Download / retrieval module | A read-only *variant* of `_info`: still `changed=false`, but returns an **artifact or URL** (file, ISO, kubeconfig, presigned link) rather than JSON state. | `slides/session-2.md` |
+| Out-of-scope endpoint 🚩 | A real endpoint you deliberately **don't** wrap — machine-facing (agent telemetry, progress callbacks, log upload) that an operator never drives. Not writing a module is a valid classification. | `slides/session-2.md` |
+| Classify by intent, not verb 🚩 | The HTTP method is a hint, not the answer: a `PATCH …/actions/…` is an action, a `POST …/import` is state-based. Ask what the caller *intends* — report, converge, or trigger. | `slides/session-2.md` |
 | Check mode 🚩 | Dry-run: predict what would change without doing it. Opt in with `supports_check_mode=True`, honor via `module.check_mode`. | `solutions/session-2/config_setting.py` |
 | Diff mode | Return a `{"before":..., "after":...}` dict so `--diff` shows the change. | `solutions/session-2/config_setting.py` |
 | `DOCUMENTATION` / `EXAMPLES` / `RETURN` | The three module doc blocks; `options:` must match `argument_spec`. 🚩 | `solutions/session-2/config_setting.py` |
@@ -70,6 +73,8 @@ can see it used. 🚩 marks the concepts beginners most often stall on.
 | `galaxy.yml` | Collection metadata: namespace, name, version, deps. | `solutions/session-4/.../galaxy.yml` |
 | `ansible-galaxy collection build` / `install` | Package a collection to a tarball and install it (the round-trip). | `exercises/session-4/README.md` |
 | `ANSIBLE_COLLECTIONS_PATH` | Env var telling Ansible where to find installed collections. | `exercises/session-4/README.md` |
+| Endpoint map 🚩 | Enumerate every operation in an API spec, then classify each into one table — your authoring backlog, reviewer lookup, and drift detector before wrapping a real API. | `slides/session-4.md` |
+| Spec snapshot vs. pinned | A map from a live spec is dated the moment saved; either pin the spec in-repo or ship the regenerate command so drift becomes a `diff`. | `slides/session-4.md` |
 
 ## Environment & tooling (SETUP)
 

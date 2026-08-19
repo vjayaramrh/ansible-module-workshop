@@ -78,6 +78,36 @@ kind** it is — each has its own idempotency rule:
 
 ---
 
+## …three, then real specs add two more
+
+Three kinds is the model. Map a **real API** and two more buckets appear:
+
+- **Download / retrieval** — a read-only *variant*. Still `changed=false`, but
+  returns an **artifact or URL** (a file, an ISO, a kubeconfig, a presigned
+  link), not JSON state. Treat like `_info`; expect binary/redirect handling.
+- **Machine-facing → *don't write a module*** — real APIs expose endpoints an
+  *operator never drives*: agent telemetry, progress callbacks, log upload. The
+  right classification is **out of scope** — and it's often a sizeable slice of
+  a real spec. *Deciding NOT to wrap an endpoint is a valid answer.*
+
+*Reuses Session 1's rule — "and when **not** to write one" — at the API level.*
+
+---
+
+## Classify by **intent**, not HTTP verb
+
+The verb is a hint, not the answer. Same method, different kind:
+
+- `PATCH …/actions/reset-validation` → a **verb** → *action*, not state.
+- `POST …/clusters/import` → creates a resource → *state-based*, not an action.
+
+> ❌ "POST `/actions/` = action, PATCH = state." That shortcut misclassifies.
+> ✅ Ask *"what does the caller intend — report, converge, or trigger?"*
+
+Get intent wrong and `changed` lies — the exact bug the next slide names.
+
+---
+
 ## Anti-pattern: the liar module
 
 ```python

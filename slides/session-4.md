@@ -129,6 +129,37 @@ For a team, a git URL is often the simplest start.
 
 ---
 
+## Before the capstone: map the API first
+
+Wrapping a real API? Don't guess endpoint-by-endpoint — **enumerate, then
+classify** (Session 2's kinds) into one table. That table is your backlog,
+your reviewer's lookup, and your drift detector.
+
+```bash
+# Every operation in an OpenAPI/Swagger spec → method, path, id
+jq -r '.paths|to_entries[] as $p | $p.value|to_entries[]
+  | select(.key|test("^(get|post|patch|put|delete)$"))
+  | [(.key|ascii_upcase),$p.key,(.value.operationId//"-")]|@tsv' spec.json
+```
+
+Then add a **pattern** column per row (`info` / `state` / `action` /
+`download` / *out-of-scope*). Now you know what to build — and what to skip.
+
+---
+
+## The map is a snapshot — make drift a `diff`
+
+- A map built from a **live** spec is dated the moment you save it.
+- Either **pin** a copy of the spec in-repo, or **ship the command** that
+  regenerates the table so a reviewer can `diff` old vs. new.
+- Silent drift is the enemy: an unpinned map *looks* authoritative long after
+  the API moved on.
+
+*Expect the mix to skew: mostly `info`/`state`, a handful of actions, and a
+real slice that's out-of-scope — the exact breakdown is per-API.*
+
+---
+
 ## Capstone: `webhook_resource`
 
 Manage a resource on a REST API idempotently.
